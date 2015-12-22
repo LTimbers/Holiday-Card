@@ -1,304 +1,168 @@
-int skierX=525;
-int skierY=675;
-int liftY=185;
-int control=1;
-//Sun and snow---------------
-int sunX=50;
-int snow=0;
-//Auto variabels--------------
-int auto=1;
-int isAt=0;
-int getTo=0;
-int direction=0;
-//Images----------------------
-PImage img0;
-PImage img1;
-PImage img2;
-PImage lift;
-PImage tree;
-PImage house;
-PImage eLift;
-//Keys------------------------
-boolean left;
-boolean right;
-boolean drop;
-boolean switchAuto;
-
-void setup()
-{
-  size(600, 700);
+float x = 0, v=25, y=440, z=0, c=10.5,n=60,b=52.5;
+PImage photo;
+void setup() {
+  size(400, 400);
   noStroke();
+  smooth();
+  ellipseMode(CENTER);
 
-  //Images-------------------------------------------------
-  img0=loadImage("http://i.imgur.com/2Yo3nds.jpg");
-  img1=loadImage("http://i.imgur.com/9Ap4ssu.jpg");
-  img2=loadImage("http://i.imgur.com/QoYodMj.jpg");
-  lift=loadImage("http://i.imgur.com/QgFJRfy.png");
-  tree=loadImage("http://i.imgur.com/ACdd5lE.png");
-  house=loadImage("http://i.imgur.com/kMdWz1N.png");
-  eLift=loadImage("http://i.imgur.com/13JG4YM.png");
-
-  frameRate(60);
-
-  background(0, 0, 250);
-  fill(#FFFFFF);
-  rect(0, 150, 600, 550);
+  photo = loadImage("http://i.imgur.com/H7x3QUX.jpg?4");
 }
 
-void draw()
-{  
-  if (switchAuto==true)
-  {
-    if (auto==0)
-    {
-      auto=1;
-    } else if (auto==1)
-    {
-      auto=0;
-    }
-  }
-  //Skier goes down hill----------------------------------
-  if (control==0)
-  {
-    //Manual----------------------------------
-    if (auto==0)
-    {
-      if (left==true)
-      {
-        if (skierX>0)
-        {
-          skierX--;
-        }
-        skierY++;
-        image(img0, skierX, skierY);
-      } else if (right==true)
-      {
-        if (skierX<580)
-        {
-          skierX++;
-        }
-        skierY++;
-        image(img1, skierX, skierY);
-      } else
-      {
-        skierY++;  
-        image(img2, skierX, skierY);
-      }
-    }
-    //Auto-----------------------------------
-    if (auto==1)
-    {
-      if (isAt>=getTo)
-      {
-        getTo=int(random(25.0, 75.0));
-        if (direction==1)
-        {
-          direction=0;
-        } else
-        {
-          direction=1;
-        }
-        isAt=0;
-      }   
 
-      if (direction==1)
-      {
-        if (skierX<580)
-        {
-          skierX++;
-        }
-        skierY++;
-        image(img1, skierX, skierY);
-        isAt++;
-      } else if (direction==0)
-      {
-        if (skierX>0)
-        {
-          skierX--;
-        }
-        skierY++;
-        image(img0, skierX, skierY);
-        isAt++;
-      }
-    }
-    //Test Distance---------------------------
-    if (skierY>675)
-    {
-      getTo=0;
-      isAt=0;
-      control=1;
-    }   
 
-    if (liftY<675)
-    {
-      liftY++;
-      image(eLift, 20, liftY-6);
-    }
-    stuff();
-  }   
+void draw(){
+frameRate(7);
+ noStroke(); 
+float randomQ = random(0, 255), randomW = random(0, 255), randomE = random(0, 255), randomR = random(0, 255), randomT = random(0, 255), randomY = random(0, 255);
 
-  //Moves to ski lift---------------------------------------
-  if (control==1)
-  {
-    if (skierX>20)
-    {
-      skierX--;
-      noStroke();
-      fill(#FFFFFF);
-      rect(skierX+5, skierY, 20, 20);
-      image(img0, skierX, skierY);
-    } else
-    {
-      control=2;
-    }
-    stuff();
-  }
 
-  //Ski lift------------------------------------------------
-  if (control==2)
-  {
-    if (skierY>190)
-    {
-      skierY--;
-    } else
-    {
-      liftY=185;
-      getTo=0;
-      isAt=0;
-      control=3;
-    }
-    image(lift, skierX, skierY-5);
-    stroke(#FFFFFF);
-    fill(#FFFFFF);
-    rect(skierX, skierY+16, 35, 8);
-    stuff();
-  }
 
-  //Left right at top of hill-------------------------------
-  if (control==3)
-  {  
-    //manual-----------------------
-    if (auto==0)
-    {
-      if (left==true)
-      {
-        if (skierX>0)
-        {
-          skierX--;
-        }
-      } else if (right==true)
-      {
-        if (skierX<580)
-        {
-          skierX++;
-        }
-      }
-    }
-    //auto-------------------------
-    if(auto==1)
-    {
-      if(getTo==0)
-      {
-        getTo=int(random(40.0,500.0));
-      }
-      if(isAt>=getTo)
-      {
-        drop=true;
-      }
-      isAt++;
-      if(skierX<600)
-      {        
-        skierX++;
-      }
-    }
-    if (drop==true)
-    {
-      drop=false;
-      getTo=0;
-      isAt=0;
-      control=0;
-    }    
-    image(img2, skierX, skierY);    
-    stroke(#FFFFFF);
-    fill(#FFFFFF);
-    rect(skierX-20, skierY, 20, 20);
-    rect(skierX+20, skierY, 20, 20);
-    if (liftY<675)
-    {
-      liftY++;
-      image(eLift, 20, liftY-6);
-    }
-    stuff();
-  }
-}
 
-//Key readers----------------------------------------------
-void keyPressed()
+background(3, 0, 79);
+fill(139,69,19);
+rect(150, 300, 100, 100);
+fill(3, 0, 79);
+ellipse(275,355,100,100);
+ellipse(125,355,100,100);
+float t =  (frameCount/100.0)%1;
+  float l = bezierPoint(70, 5, 5, 70, t);
+  float k = bezierPoint( -25, 100, 300, 625, t);
+ float j = bezierPoint(70, 5, 5, 70, t);
+  float h = bezierPoint( -25, 100, 300, 625, t);
+
+fill(255, 233, 33);
+ellipse(k, l, 50, 50);
+fill(3, 0, 79);
+ellipse(k+10,l-10, 55, 50);
+
+image(photo, h-200,j);
+
+
+fill(9, 89, 11);
+triangle(50, 350, 350, 350, 200, 200);
+triangle(75, 275, 325, 275, 200, 150);
+triangle(100, 200, 300, 200, 200, 100);
+triangle(125, 140, 275, 140, 200, 50);
+
+
+fill(133, 131, 131);
+rect(187, 270, 10, 10);
+rect(160, 200, 10, 10);
+rect(230, 160, 10, 10);
+rect(240, 230, 10, 10);
+fill(133, 131, 131);
+rect(120, 310, 10, 10);
+rect(170, 125, 10, 10);
+rect(224, 100, 10, 10);
+rect(270, 285, 10, 10);
+
+beginShape();
+fill(255, 255, 255);
+vertex(175, 40);
+vertex(195.25, 40);
+vertex(200, 20);
+vertex(206.25, 40);
+vertex(225, 40);
+vertex(209.5, 51.25);
+vertex(215, 70);
+vertex(200, 58.75);
+vertex(185, 70);
+vertex(190.5, 51.25);
+endShape(CLOSE);
+
+beginShape();
+
+if(x%2==0)
 {
-  if (key=='a') left=true;
-  if (key=='d') right=true;
-  if (key=='e') drop=true;
-  if (key=='q') switchAuto=true;
+    fill(255, 238, 0);
+}
+else
+{
+    fill(255, 238, 0,100);
 }
 
-void keyReleased()
+vertex(175, 40);
+vertex(195.25, 40);
+vertex(200, 20);
+vertex(206.25, 40);
+vertex(225, 40);
+vertex(209.5, 51.25);
+vertex(215, 70);
+vertex(200, 58.75);
+vertex(185, 70);
+vertex(190.5, 51.25);
+endShape(CLOSE);
+
+
+
+if(x%2==0)
 {
-  if (key=='a') left=false;
-  if (key=='d') right=false;
-  if (key=='e') drop=false;
-  if (key=='q') switchAuto=false;
+    fill(255, 0, 0);
+}
+else
+{
+    fill(9,89,11);
+}
+textSize(25);
+text("Happy ",275,50);
+if(x%2==0)
+{
+    fill(9, 89, 11);
+}
+else
+{
+    fill(265,0,0);
 }
 
-void stuff()
+text("Holidays!",262.5,80);
+
+
+
+x++;
+fill(randomQ,randomW,randomE);
+ellipse(275,300,20,20);
+fill(randomQ,randomR,randomE);
+ellipse(192,285,20,20);
+fill(randomQ,randomW,randomT);
+ellipse(165,215,20,20);
+fill(randomY,randomW,randomE);
+ellipse(235,175,20,20);
+fill(randomR,randomT,randomY);
+ellipse(245,245,20,20);
+fill(randomE,randomW,randomQ);
+ellipse(125,325,20,20);
+fill(randomR,randomW,randomT);
+ellipse(175,140,20,20);
+fill(randomY,randomT,randomE);
+ellipse(175,140,20,20);
+fill(randomR,randomY,randomR);
+ellipse(229,115,20,20);
+
+
+for(float i=1;i<25;i++){
+    fill(255, 255, 255);
+    ellipse(random(width),random(height),5,5);
+    ellipse(random(width),random(height),7,7);
+    ellipse(random(width),random(height),1,1);
+    ellipse(random(width),random(height),3,3);
+    ellipse(random(width),random(height),4,4);
+    ellipse(random(width),random(height),6,6);
+    ellipse(random(width),random(height),2,2);
+   
+}
+
+if(y>=390)
 {
-  //Snow stuff------------------------------------------------
-  snow++;
-  if (snow%4==0)
-  {
-    fill(0, 0, 250);
-    rect(0, 0, 600, 150);
-    for (int x=1; x<100; x++)
-    {
-      rect(random(1, 600), random(1, 148), 2, 2);
-    }
-  }
-  textSize(30);
-  fill(204, 61, 101);
-  text("Merry Christmas", 200, 100);
+    y--;
+    
+}
+else
+{
+    y=440;
+}
 
-  //Sun movement----------------------------------------------
-  sunX++;
-  if (sunX>650)
-  {
-    sunX=-50;
-  }
-  stroke(0, 0, 250);
-  fill(#FFE079);
-  ellipse(sunX, 40, 40, 40); 
+ellipse(300,y+10,250,50);
+ellipse(100,y,250,50);
 
-  //Extra images---------------------------------------------
-  fill(#030303);
-  rect(35, 175, 4, 500);  
-  image(house, 480, 600);
-
-  image(tree, 80, 240);
-  image(tree, 80, 540);
-  image(tree, 120, 350);
-  image(tree, 200, 450);
-  image(tree, 250, 200);
-  image(tree, 290, 520);
-  image(tree, 320, 300); 
-  image(tree, 380, 430);
-  image(tree, 450, 225);
-  image(tree, 510, 420);
-  image(tree, 560, 300);
-  textSize(15);
-  if(auto==1)
-  {
-    text("Auto Mode: ON,  press q to toggle",20,20);
-  }
-  else
-  {
-    text("Auto Mode: OFF, press q to toggle",20,20);
-  }
 }
